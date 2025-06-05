@@ -11,11 +11,12 @@
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333;
-      background-image: url("https://scontent.fcai20-2.fna.fbcdn.net/v/t39.30808-6/480644315_1040083861470445_4504165856457656690_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=LkiS28Zxnp0Q7kNvwE6x3tl&_nc_oc=Adm_RVchfYiIOxdQU6Qi70eaV97fhqMi10rqdWVUGNcPFV0Ju6IksKPls6VBeWbF-qE&_nc_zt=23&_nc_ht=scontent.fcai20-2.fna&_nc_gid=BvWqeLLrOu5DC883CKOWQA&oh=00_AfHeupGrWhBzoahldAMKT0MAm4lwNSeaReW2gyVdckn4tQ&oe=68098820");
+      background-image: url("https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg"); 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      transition: background-image 0.5s ease;
     }
     header {
       background: rgba(47, 110, 86, 0.8);
@@ -36,7 +37,7 @@
       font-size: 2em;
     }
     nav {
-      background: #333;
+      background: #333;  
       color: white;
       display: flex;
       justify-content: center;
@@ -248,335 +249,397 @@
     .audio-controls input[type="range"] {
       width: 100px;
     }
+    /* نموذج تغيير الصورة الخلفية */
+    .admin-bg-form {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .admin-bg-form input[type="url"] {
+      width: calc(100% - 100px);
+      padding: 8px;
+      margin-right: 10px;
+    }
+    .admin-bg-form button {
+      padding: 8px 15px;
+      background: #2f6e56;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* أنماط خاصة باللغة العربية */
+    .arabic {
+      font-family: 'Tajawal', sans-serif;
+    }
   </style>
 </head>
 <body>
-  <!-- مشغل الموسيقى -->
-  <audio id="background-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <div class="audio-controls">
-    <button onclick="toggleMusic()"><i class="fas fa-play" id="play-pause-icon"></i></button>
-    <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1" oninput="adjustVolume()">
+<!-- مشغل الموسيقى -->
+<audio id="background-music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"  type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<div class="audio-controls">
+  <button onclick="toggleMusic()"><i class="fas fa-play" id="play-pause-icon"></i></button>
+  <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1" oninput="adjustVolume()">
+</div>
+<header>
+  <img src="https://i.postimg.cc/k4Vjx4jJ/Whats-App-Image-2025-03-28-at-02-12-19-ecc9724b.jpg"  alt="Clinic Logo" class="logo">
+  <h1 data-en="Hisham Genedy" data-ar="هشام جنيدي">Hisham Genedy</h1><br>
+  <h data-en="ENT | Sleep Surgery | Rhinoplasty" data-ar="طب الأنف والحنجرة | جراحة النوم | تجميل الأنف">ENT | Sleep Surgery | Rhinoplasty</h-h>
+</header>
+<nav>
+  <a href="#" onclick="showPage('home')">Home</a>
+  <a href="#" onclick="showPage('about')">About</a>
+  <a href="#" onclick="showPage('Experience-Publications')">Experience-Publications</a>
+  <a href="#" onclick="showPage('booking')">Booking</a>
+  <a href="#" onclick="showPage('surgery-instructions')">Surgery Instructions</a>
+  <a href="#" onclick="showPage('testimonials')">Testimonials</a>
+  <button onclick="toggleLanguage()" style="margin-left: 10px; background: none; border: none; color: white; font-size: 1em; cursor: pointer;">عربي</button>
+  <button onclick="toggleAdminLogin()" style="margin-left: auto; background: none; border: none; color: white; font-size: 1em; cursor: pointer;">Admin Login</button>
+</nav>
+<!-- نافذة تسجيل الدخول للمشرف -->
+<div id="admin-login" class="hidden" style="position: fixed; top: 20px; right: 20px; background: rgba(0, 0, 0, 0.7); color: white; padding: 20px; border-radius: 10px; z-index: 1000;">
+  <label for="admin-password">Enter Admin Password:</label>
+  <input type="password" id="admin-password" placeholder="Password">
+  <button onclick="loginAsAdmin()">Login</button>
+  <!-- نموذج تغيير الخلفية -->
+  <div class="admin-bg-form">
+    <h4>Change Background Image</h4>
+    <input type="url" id="bg-url" placeholder="Enter image URL">
+    <button onclick="changeBackground()">Apply</button>
   </div>
-  <header>
-    <img src="https://i.postimg.cc/k4Vjx4jJ/Whats-App-Image-2025-03-28-at-02-12-19-ecc9724b.jpg" alt="Clinic Logo" class="logo">
-    <h1>Hisham Genedy </h1><br>
-    <h>ENT | Sleep Surgery | Rhinoplasty</h>
-  </header>
-  <nav>
-    <a href="#" onclick="showPage('home')">Home</a>
-    <a href="#" onclick="showPage('about')">About</a>
-    <a href="#" onclick="showPage('Experience-Publications')">Experience-Publications</a>
-    <a href="#" onclick="showPage('booking')">Booking</a>
-    <a href="#" onclick="showPage('testimonials')">Testimonials</a>
-  </nav>
-  <div id="home" class="container">
-    <img src="https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg" alt="Dr. Hisham Genedy Profile" class="profile-image">
-    <h2>Welcome to Dr. Hisham Genedy's Clinic</h2>
-    <p>MD, MsC, MRC-ENT<br>ENT | Sleep Surgery | Rhinoplasty</p>
+</div>
+<!-- الصفحة الرئيسية -->
+<div id="home" class="container">
+  <img src="https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg"  alt="Dr. Hisham Genedy Profile" class="profile-image">
+  <h2 data-en="Welcome to Dr. Hisham Genedy's Clinic" data-ar="مرحبًا بكم في عيادة الدكتور هشام جنيدي">Welcome to Dr. Hisham Genedy's Clinic</h2>
+  <p data-en="MD, MsC, MRC-ENT<br>ENT | Sleep Surgery | Rhinoplasty" data-ar="دكتوراه، ماجستير، زمالة الطب الأنفي الحنجري<br>طب الأنف والحنجرة | جراحة النوم | تجميل الأنف">MD, MsC, MRC-ENT<br>ENT | Sleep Surgery | Rhinoplasty</p>
+</div>
+<!-- صفحة عن الطبيب -->
+<div id="about" class="container hidden">
+  <h2 data-en="About Dr. Hesham Genedy" data-ar="عن الدكتور هشام جنيدي">About Dr. Hesham Genedy</h2>
+  <img src="https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg"  alt="Dr. Hisham Genedy" class="about-image">
+  <p data-en="Dr. Hesham Genedy is a highly experienced ENT specialist with over 15 years of practice." data-ar="الدكتور هشام جنيدي متخصص في طب الأنف والأذن والحنجرة وله أكثر من 15 عامًا من الخبرة.">Dr. Hesham Genedy is a highly experienced ENT specialist with over 15 years of practice.</p>
+</div>
+<!-- صور العمل والمنشورات -->
+<div id="Experience-Publications" class="container hidden">
+  <h2 data-en="Experience & Publications" data-ar="الخبرة والمنشورات">Experience & Publications</h2>
+  <div class="Experience-Publications">
+    <img src="https://i.postimg.cc/PqScW0T4/IMG-20250411-WA0014.jpg"  alt="Clinic Image 1">
+    <img src="https://i.postimg.cc/7LHdTq8h/IMG-20250411-WA0018.jpg"  alt="Clinic Image 2">
+    <img src="https://i.postimg.cc/d3yxK1dH/IMG-20250411-WA0019.jpg"  alt="Clinic Image 3">
+    <img src="https://i.postimg.cc/rwcYvqpj/IMG-20250411-WA0024.jpg"  alt="Clinic Image 4">
+    <img src="https://i.postimg.cc/662SZHSr/IMG-20250411-WA0022.jpg"  alt="Clinic Image 5">
+    <img src="https://i.postimg.cc/65K0QYN5/Whats-App-Image-2025-04-11-at-01-28-57-763a52fa.jpg"  alt="Clinic Image 6">
+    <img src="https://i.postimg.cc/662SZHSr/IMG-20250411-WA0022.jpg"  alt="Clinic Image 7">
+    <img src="https://i.postimg.cc/Kc6WDPSd/IMG-20250411-WA0021.jpg"  alt="Clinic Image 8">
+    <img src="https://i.postimg.cc/bNLQwPT3/Whats-App-Image-2025-04-11-at-01-28-57-3c3c2221.jpg"  alt="Clinic Image 9">
+    <img src="https://i.postimg.cc/Hk4FxVNF/IMG-20250411-WA0017.jpg"  alt="Clinic Image 10">
+    <img src="https://i.postimg.cc/V65hD4Nc/IMG-20250411-WA0012.jpg"  alt="Clinic Image 11">
+    <img src="https://i.postimg.cc/DZDMDsW4/IMG-20250411-WA0020.jpg"  alt="Clinic Image 12">
+    <img src="https://i.postimg.cc/Ss09vxSN/Whats-App-Image-2025-04-16-at-19-48-09-7732c7a2.jpg"  alt="Clinic Image 13">
+    <img src="https://i.postimg.cc/5tD5Wm3J/Whats-App-Image-2025-04-11-at-01-54-15-04651aeb.jpg"  alt="Clinic Image 14">
+    <img src="https://i.postimg.cc/fRTfcyLG/Whats-App-Image-2025-04-11-at-01-54-14-62aeece8.jpg"  alt="Clinic Image 15">
+    <img src="https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg"  alt="Clinic Image 16">
+    <img src="https://i.postimg.cc/43Yv00pw/Whats-App-Image-2025-04-11-at-01-43-27-07ca8696.jpg"  alt="Clinic Image 17">
+    <img src="https://i.postimg.cc/bYkg84WB/Whats-App-Image-2025-04-11-at-01-43-27-3a44a7c1.jpg"  alt="Clinic Image 18">
+    <img src="https://i.postimg.cc/QCQJbWc3/Whats-App-Image-2025-04-11-at-01-43-27-3e7e52a8.jpg"  alt="Clinic Image 19">
+    <img src="https://i.postimg.cc/527qnJQ6/Whats-App-Image-2025-04-11-at-01-54-14-81162fc9.jpg"  alt="Clinic Image 20">
+    <img src="https://i.postimg.cc/fyfYXQhW/Whats-App-Image-2025-04-11-at-01-54-16-993dd845.jpg"  alt="Clinic Image 21">
+    <img src="https://i.postimg.cc/zvrnVX6P/Whats-App-Image-2025-04-11-at-01-54-16-05ac70f3.jpg"  alt="Clinic Image 22">
+    <img src="https://i.postimg.cc/fybQC3KF/Whats-App-Image-2025-04-11-at-01-54-18-a147df39.jpg"  alt="Clinic Image 23">
+    <img src="https://i.postimg.cc/SsDwnShG/Whats-App-Image-2025-04-11-at-01-54-17-a0de7e1f.jpg"  alt="Clinic Image 24">
   </div>
-  <div id="about" class="container hidden">
-    <h2>About Dr. Hesham Genedy</h2>
-    <img src="https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg" alt="Dr. Hisham Genedy" class="about-image">
-    <p>Dr. Hesham Genedy is a highly experienced ENT specialist with over 15 years of practice.</p>
-  </div>
-  <div id="Experience-Publications" class="container hidden">
-    <h2>Experience-Publications</h2>
-    <div class="Experience-Publications">
-      <img src="https://i.postimg.cc/PqScW0T4/IMG-20250411-WA0014.jpg" alt="Clinic Image 1">
-      <img src="https://i.postimg.cc/7LHdTq8h/IMG-20250411-WA0018.jpg" alt="Clinic Image 2">
-      <img src="https://i.postimg.cc/d3yxK1dH/IMG-20250411-WA0019.jpg" alt="Clinic Image 3">
-      <img src="https://i.postimg.cc/rwcYvqpj/IMG-20250411-WA0024.jpg" alt="Clinic Image 4">
-      <img src="https://i.postimg.cc/662SZHSr/IMG-20250411-WA0022.jpg" alt="Clinic Image 5">
-      <img src="https://i.postimg.cc/65K0QYN5/Whats-App-Image-2025-04-11-at-01-28-57-763a52fa.jpg" alt="Clinic Image 6">
-      <img src="https://i.postimg.cc/662SZHSr/IMG-20250411-WA0022.jpg" alt="Clinic Image 7">
-      <img src="https://i.postimg.cc/Kc6WDPSd/IMG-20250411-WA0021.jpg" alt="Clinic Image 8">
-      <img src="https://i.postimg.cc/bNLQwPT3/Whats-App-Image-2025-04-11-at-01-28-57-3c3c2221.jpg" alt="Clinic Image 9">
-      <img src="https://i.postimg.cc/Hk4FxVNF/IMG-20250411-WA0017.jpg" alt="Clinic Image 10">
-      <img src="https://i.postimg.cc/V65hD4Nc/IMG-20250411-WA0012.jpg" alt="Clinic Image 11">
-      <img src="https://i.postimg.cc/DZDMDsW4/IMG-20250411-WA0020.jpg" alt="Clinic Image 12">
-      <img src="https://i.postimg.cc/Ss09vxSN/Whats-App-Image-2025-04-16-at-19-48-09-7732c7a2.jpg" alt="Clinic Image 13">
-      <img src="https://i.postimg.cc/5tD5Wm3J/Whats-App-Image-2025-04-11-at-01-54-15-04651aeb.jpg" alt="Clinic Image 14">
-      <img src="https://i.postimg.cc/fRTfcyLG/Whats-App-Image-2025-04-11-at-01-54-14-62aeece8.jpg" alt="Clinic Image 15">
-      <img src="https://i.postimg.cc/gJ6Dx7Jr/Whats-App-Image-2025-04-06-at-13-20-02-3468f1a5.jpg" alt="Clinic Image 16">
-      <img src="https://i.postimg.cc/43Yv00pw/Whats-App-Image-2025-04-11-at-01-43-27-07ca8696.jpg" alt="Clinic Image 17">
-      <img src="https://i.postimg.cc/bYkg84WB/Whats-App-Image-2025-04-11-at-01-43-27-3a44a7c1.jpg" alt="Clinic Image 18">
-      <img src="https://i.postimg.cc/QCQJbWc3/Whats-App-Image-2025-04-11-at-01-43-27-3e7e52a8.jpg" alt="Clinic Image 19">
-      <img src="https://i.postimg.cc/527qnJQ6/Whats-App-Image-2025-04-11-at-01-54-14-81162fc9.jpg" alt="Clinic Image 20">
-      <img src="https://i.postimg.cc/fyfYXQhW/Whats-App-Image-2025-04-11-at-01-54-16-993dd845.jpg" alt="Clinic Image 21">
-      <img src="https://i.postimg.cc/zvrnVX6P/Whats-App-Image-2025-04-11-at-01-54-16-05ac70f3.jpg" alt="Clinic Image 22">
-      <img src="https://i.postimg.cc/fybQC3KF/Whats-App-Image-2025-04-11-at-01-54-18-a147df39.jpg" alt="Clinic Image 23">
-      <img src="https://i.postimg.cc/SsDwnShG/Whats-App-Image-2025-04-11-at-01-54-17-a0de7e1f.jpg" alt="Clinic Image 24">
-    </div>
-  </div>
-  <div id="booking" class="container hidden">
-    <h2>Book an Appointment</h2>
-    <form class="booking-form" onsubmit="return false;">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" placeholder="Enter your name" required>
-      <label for="phone">Phone Number:</label>
-      <input type="tel" id="phone" placeholder="Enter your phone number" required>
-      <label for="country">Country:</label>
-      <select id="country" onchange="toggleGovernorate()">
-        <option value="egypt">Egypt</option>
-        <option value="saudi">Saudi Arabia</option>
+</div>
+<!-- صفحة الحجز -->
+<div id="booking" class="container hidden">
+  <h2 data-en="Book an Appointment" data-ar="احجز موعدًا">Book an Appointment</h2>
+  <form class="booking-form" onsubmit="return false;">
+    <label for="name" data-en="Full Name:" data-ar="الاسم الكامل:">Full Name:</label>
+    <input type="text" id="name" placeholder="Enter your name" required>
+    <label for="phone" data-en="Phone Number:" data-ar="رقم الهاتف:">Phone Number:</label>
+    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+    <label for="country" data-en="Country:" data-ar="الدولة:">Country:</label>
+    <select id="country" onchange="toggleGovernorate()">
+      <option value="egypt">Egypt</option>
+      <option value="saudi">Saudi Arabia</option>
+    </select>
+    <div id="egypt-governorates" class="hidden">
+      <label for="governorate-egypt" data-en="Governorate:" data-ar="المحافظة:">Governorate:</label>
+      <select id="governorate-egypt">
+        <option value="cairo">Cairo</option>
+        <option value="giza">Giza</option>
+        <option value="beni-suef">Beni Suef</option>
+        <option value="october">October</option>
+        <option value="sheikh-zayed">Sheikh Zayed</option>
       </select>
-      <div id="egypt-governorates" class="hidden">
-        <label for="governorate-egypt">Governorate:</label>
-        <select id="governorate-egypt">
-          <option value="cairo">Cairo</option>
-          <option value="giza">Giza</option>
-          <option value="beni-suef">Beni Suef</option>
-          <option value="october">October</option>
-          <option value="sheikh-zayed">Sheikh Zayed</option>
-        </select>
-      </div>
-      <div id="saudi-regions" class="hidden">
-        <label for="region-saudi">Region:</label>
-        <select id="region-saudi">
-          <option value="dammam">Dammam</option>
-        </select>
-      </div>
-      <!-- اختيار نوع الاستشارة -->
-      <label for="consultation-type">Consultation Type:</label>
-      <select id="consultation-type" required>
-        <option value="online">Online</option>
-        <option value="clinic">In Clinic</option>
+    </div>
+    <div id="saudi-regions" class="hidden">
+      <label for="region-saudi" data-en="Region:" data-ar="المنطقة:">Region:</label>
+      <select id="region-saudi">
+        <option value="dammam">Dammam</option>
       </select>
-      <button type="button" onclick="submitForm()">Submit</button>
-    </form>
+    </div>
+    <label for="consultation-type" data-en="Consultation Type:" data-ar="نوع الاستشارة:">Consultation Type:</label>
+    <select id="consultation-type" required>
+      <option value="online">Online</option>
+      <option value="clinic">In Clinic</option>
+    </select>
+    <button type="button" onclick="submitForm()" data-en="Submit" data-ar="إرسال">Submit</button>
+  </form>
+</div>
+<!-- صفحة تعليمات العمليات -->
+<div id="surgery-instructions" class="container hidden">
+  <h2 data-en="Surgery Instructions" data-ar="تعليمات العمليات">Surgery Instructions</h2>
+  <p data-en="Please select the type of surgery to view pre and post-operative instructions:" data-ar="من فضلك اختر نوع الجراحة لعرض تعليمات ما قبل وبعد العملية:">Please select the type of surgery to view pre and post-operative instructions:</p>
+  <ul>
+    <li><a href="https://example.com/rhinoplasty_instructions.pdf"  target="_blank" data-en="Rhinoplasty Instructions (PDF)" data-ar="تعليمات جراحة تجميل الأنف (PDF)">Rhinoplasty Instructions (PDF)</a></li>
+    <li><a href="https://example.com/sleep_surgery_instructions.pdf"  target="_blank" data-en="Sleep Surgery Instructions (PDF)" data-ar="تعليمات جراحة النوم (PDF)">Sleep Surgery Instructions (PDF)</a></li>
+  </ul>
+</div>
+<!-- آراء العملاء -->
+<div id="testimonials" class="container hidden">
+  <h2 data-en="Patient Testimonials" data-ar="آراء المرضى">Patient Testimonials</h2>
+  <button onclick="toggleTestimonialForm()" style="margin-bottom: 20px; padding: 10px 20px; background: #2f6e56; color: white; border: none; border-radius: 5px; cursor: pointer;" data-en="Add Testimonial" data-ar="إضافة رأي">Add Testimonial</button>
+  <div class="add-testimonial-form" id="testimonialForm" style="display: none;">
+    <h3 data-en="Add New Testimonial" data-ar="أضف رأي جديد">Add New Testimonial</h3>
+    <label for="patient-name" data-en="Patient Name:" data-ar="اسم المريض:">Patient Name:</label>
+    <input type="text" id="patient-name" placeholder="Enter patient's name" required>
+    <label for="patient-comment" data-en="Comment:" data-ar="التعليق:">Comment:</label>
+    <textarea id="patient-comment" placeholder="Enter patient's comment" rows="4" required spellcheck="true"></textarea>
+    <label for="patient-image" data-en="Upload Image (Optional):" data-ar="تحميل صورة (اختياري):">Upload Image (Optional):</label>
+    <input type="file" id="patient-image" accept="image/*">
+    <button type="button" onclick="addOrUpdateTestimonial()" data-en="Submit" data-ar="إرسال">Submit</button>
   </div>
-  <div id="testimonials" class="container hidden">
-    <h2>Patient Testimonials</h2>
-    <div class="admin-controls">
-      <button onclick="toggleAdminLogin()" style="margin-bottom: 10px; padding: 10px 20px; background: #2f6e56; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        Admin Login
-      </button>
-      <div id="admin-login" class="hidden">
-        <label for="admin-password">Enter Admin Password:</label>
-        <input type="password" id="admin-password" placeholder="Password">
-        <button onclick="loginAsAdmin()">Login</button>
-      </div>
-    </div>
-    <button onclick="toggleTestimonialForm()" style="margin-bottom: 20px; padding: 10px 20px; background: #2f6e56; color: white; border: none; border-radius: 5px; cursor: pointer;">
-      Add Testimonial
-    </button>
-    <div class="add-testimonial-form" id="testimonialForm">
-      <h3>Add New Testimonial</h3>
-      <label for="patient-name">Patient Name:</label>
-      <input type="text" id="patient-name" placeholder="Enter patient's name" required>
-      <label for="patient-comment">Comment:</label>
-      <textarea id="patient-comment" placeholder="Enter patient's comment" rows="4" required spellcheck="true"></textarea>
-      <label for="patient-image">Upload Image (Optional):</label>
-      <input type="file" id="patient-image" accept="image/*">
-      <button type="button" onclick="addOrUpdateTestimonial()">Submit</button>
-    </div>
-    <div class="testimonials" id="testimonialsList"></div>
+  <div class="testimonials" id="testimonialsList"></div>
+</div>
+<!-- الفوتر -->
+<footer>
+  <p>&copy; 2023 Dr. Hesham Genedy. All rights reserved.</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/DrHishamENT"  target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="https://www.instagram.com/drhishament/"  target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i> Instagram</a> 
+    <a href="https://www.youtube.com/@DrHishamENT"  target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i> YouTube</a>
+    <a href="https://www.tiktok.com/@drhishament"  target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i> TikTok</a>
+    <a href="https://www.snapchat.com/add/drhishament"  target="_blank" aria-label="Snapchat"><i class="fab fa-snapchat"></i> Snapchat</a>
   </div>
-  <footer>
-    <p>&copy; 2023 Dr. Hesham Genedy. All rights reserved.</p>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/DrHishamENT" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i> Facebook</a>
-      <a href="https://www.instagram.com/drhishament/?igsh=bXpjZWV2MWRhZGhp&utm_source=qr#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://www.youtube.com/@DrHishamENT" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i> YouTube</a>
-      <a href="https://www.tiktok.com/@drhishament" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i> TikTok</a>
-      <a href="https://www.snapchat.com/add/drhishament" target="_blank" aria-label="Snapchat"><i class="fab fa-snapchat"></i> Snapchat</a>
-    </div>
-  </footer>
-  <script>
-    // متغير للتحقق من حالة تسجيل الدخول كمسؤول
-    let isAdminLoggedIn = false;
-    let currentEditingIndex = null; // لمعرفة إذا كان هناك رأي قيد التعديل
-
-    // تحميل الآراء المخزنة عند بدء تشغيل الصفحة
-    window.onload = () => {
-      showPage('home');
-      loadTestimonials();
-      playMusic(); // تشغيل الموسيقى تلقائيًا
-    };
-
-    const music = document.getElementById('background-music');
-    const playPauseIcon = document.getElementById('play-pause-icon');
-
-    function playMusic() {
+</footer>
+<script>
+  let isArabic = false;
+  let isAdminLoggedIn = false;
+  let currentEditingIndex = null;
+  function showPage(pageId) {
+    document.querySelectorAll('.container').forEach(p => p.classList.add('hidden'));
+    document.getElementById(pageId).classList.remove('hidden');
+  }
+  // مشغل الموسيقى
+  const music = document.getElementById('background-music');
+  const playPauseIcon = document.getElementById('play-pause-icon');
+  function playMusic() { music.play(); playPauseIcon.className = "fas fa-pause"; }
+  function toggleMusic() {
+    if (music.paused) {
       music.play();
-      playPauseIcon.classList.remove('fa-play');
-      playPauseIcon.classList.add('fa-pause');
+      playPauseIcon.className = "fas fa-pause";
+    } else {
+      music.pause();
+      playPauseIcon.className = "fas fa-play";
     }
-
-    function toggleMusic() {
-      if (music.paused) {
-        music.play();
-        playPauseIcon.classList.remove('fa-play');
-        playPauseIcon.classList.add('fa-pause');
-      } else {
-        music.pause();
-        playPauseIcon.classList.remove('fa-pause');
-        playPauseIcon.classList.add('fa-play');
-      }
+  }
+  function adjustVolume() {
+    music.volume = document.getElementById('volume-control').value;
+  }
+  // تبديل اللغة
+  function toggleLanguage() {
+    isArabic = !isArabic;
+    document.querySelectorAll('[data-en][data-ar]').forEach(el => {
+      el.textContent = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+    updateSelectOptions();
+    document.body.style.direction = isArabic ? 'rtl' : 'ltr';
+    document.body.classList.toggle('arabic', isArabic);
+  }
+  function updateSelectOptions() {
+    const countrySelect = document.getElementById('country');
+    if (countrySelect) {
+      countrySelect.options[0].text = isArabic ? 'مصر' : 'Egypt';
+      countrySelect.options[1].text = isArabic ? 'المملكة العربية السعودية' : 'Saudi Arabia';
     }
-
-    function adjustVolume() {
-      const volumeControl = document.getElementById('volume-control');
-      music.volume = volumeControl.value;
+    const governorateLabel = document.querySelector('label[for="governorate-egypt"]');
+    if (governorateLabel) {
+      governorateLabel.textContent = isArabic ? 'المحافظة:' : 'Governorate:';
     }
-
-    function loadTestimonials() {
-      const testimonialsList = document.getElementById('testimonialsList');
-      const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
-      testimonialsList.innerHTML = ''; // مسح القائمة الحالية
-      savedTestimonials.forEach((testimonial, index) => {
-        const newTestimonial = document.createElement('div');
-        newTestimonial.classList.add('testimonial');
-        newTestimonial.innerHTML = `
-          <img src="${testimonial.image || 'https://via.placeholder.com/80'}" alt="${testimonial.name}">
-          <div>
-            <h3>${testimonial.name}</h3>
-            <p>"${testimonial.comment}"</p>
-          </div>
-          <button class="edit-btn" onclick="editTestimonial(${index})" style="display: ${isAdminLoggedIn ? 'block' : 'none'};">Edit</button>
-          <button class="delete-btn" onclick="deleteTestimonial(${index})" style="display: ${isAdminLoggedIn ? 'block' : 'none'};">Delete</button>
-        `;
-        testimonialsList.appendChild(newTestimonial);
-      });
+    const regionLabel = document.querySelector('label[for="region-saudi"]');
+    if (regionLabel) {
+      regionLabel.textContent = isArabic ? 'المنطقة:' : 'Region:';
     }
-
-    function toggleTestimonialForm() {
-      const form = document.getElementById('testimonialForm');
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    const consultationLabel = document.querySelector('label[for="consultation-type"]');
+    if (consultationLabel) {
+      consultationLabel.textContent = isArabic ? 'نوع الاستشارة:' : 'Consultation Type:';
     }
-
-    function addOrUpdateTestimonial() {
-      const name = document.getElementById('patient-name').value;
-      const comment = document.getElementById('patient-comment').value;
-      const imageInput = document.getElementById('patient-image');
-      const imageFile = imageInput.files[0];
-      if (!name || !comment) {
-        alert('Please fill in the name and comment fields.');
-        return;
-      }
-      let imageUrl = '';
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          imageUrl = e.target.result;
-          saveOrUpdateTestimonial(name, comment, imageUrl);
-        };
-        reader.readAsDataURL(imageFile);
-      } else {
-        saveOrUpdateTestimonial(name, comment, 'https://via.placeholder.com/80');
-      }
+    const onlineOption = document.querySelector('#consultation-type option[value="online"]');
+    if (onlineOption) {
+      onlineOption.textContent = isArabic ? 'عن بعد' : 'Online';
     }
+    const clinicOption = document.querySelector('#consultation-type option[value="clinic"]');
+    if (clinicOption) {
+      clinicOption.textContent = isArabic ? 'في العيادة' : 'In Clinic';
+    }
+  }
+  // تغيير الخلفية
+  function changeBackground() {
+    const bgUrl = document.getElementById('bg-url').value;
+    if (bgUrl) {
+      document.body.style.backgroundImage = `url('${bgUrl}')`;
+      localStorage.setItem('customBackground', bgUrl);
+    } else {
+      alert("Please enter a valid image URL.");
+    }
+  }
+  window.onload = () => {
+    showPage('home');
+    loadTestimonials();
+    playMusic();
+    const savedBg = localStorage.getItem('customBackground');
+    if (savedBg) {
+      document.body.style.backgroundImage = `url('${savedBg}')`;
+    }
+  };
+  function toggleAdminLogin() {
+    document.getElementById('admin-login').classList.toggle('hidden');
+  }
+  function loginAsAdmin() {
+    const password = document.getElementById('admin-password').value;
+    const correctPassword = "Hisham@2025";
+    if (password === correctPassword) {
+      isAdminLoggedIn = true;
+      loadTestimonials();
+    } else {
+      alert('Incorrect password.');
+    }
+  }
+  function loadTestimonials() {
+    const testimonialsList = document.getElementById('testimonialsList');
+    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+    testimonialsList.innerHTML = '';
+    savedTestimonials.forEach((testimonial, index) => {
+      const newTestimonial = document.createElement('div');
+      newTestimonial.classList.add('testimonial');
+      newTestimonial.innerHTML = `
+        <img src="${testimonial.image || 'https://via.placeholder.com/80'}"  alt="${testimonial.name}">
+        <div>
+          <h3>${testimonial.name}</h3>
+          <p>"${testimonial.comment}"</p>
+        </div>
+        <button class="edit-btn" onclick="editTestimonial(${index})" style="display: ${isAdminLoggedIn ? 'block' : 'none'};">Edit</button>
+        <button class="delete-btn" onclick="deleteTestimonial(${index})" style="display: ${isAdminLoggedIn ? 'block' : 'none'};">Delete</button>
+      `;
+      testimonialsList.appendChild(newTestimonial);
+    });
+  }
+  function addOrUpdateTestimonial() {
+    const name = document.getElementById('patient-name').value;
+    const comment = document.getElementById('patient-comment').value;
+    const imageInput = document.getElementById('patient-image');
+    const imageFile = imageInput.files[0];
+    if (!name || !comment) return alert('Please fill in all fields.');
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        saveOrUpdateTestimonial(name, comment, e.target.result);
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      saveOrUpdateTestimonial(name, comment, 'https://via.placeholder.com/80');  
+    }
+  }
+  function saveOrUpdateTestimonial(name, comment, image) {
+    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+    if (currentEditingIndex !== null) {
+      savedTestimonials[currentEditingIndex] = { name, comment, image };
+      currentEditingIndex = null;
+    } else {
+      savedTestimonials.push({ name, comment, image });
+    }
+    localStorage.setItem('testimonials', JSON.stringify(savedTestimonials));
 
-    function saveOrUpdateTestimonial(name, comment, image) {
-      const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
-      if (currentEditingIndex !== null) {
-        // تحديث الرأي الحالي
-        savedTestimonials[currentEditingIndex] = { name, comment, image };
-        currentEditingIndex = null;
-      } else {
-        // إضافة رأي جديد
-        savedTestimonials.push({ name, comment, image });
-      }
+    // إرسال الرسالة إلى واتساب مباشرًا
+    const whatsappNumber = "201556335404"; // الرقم بدون رموز أو مسافات
+    const message = `تم استلام رأي جديد:\nالاسم: ${name}\nالتعليق: "${comment}"`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
+
+    loadTestimonials();
+    clearTestimonialForm();
+  }
+  function deleteTestimonial(index) {
+    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+    if (confirm('Are you sure you want to delete this testimonial?')) {
+      savedTestimonials.splice(index, 1);
       localStorage.setItem('testimonials', JSON.stringify(savedTestimonials));
       loadTestimonials();
-      clearTestimonialForm();
     }
-
-    function deleteTestimonial(index) {
-      const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
-      if (confirm('Are you sure you want to delete this testimonial?')) {
-        savedTestimonials.splice(index, 1); // حذف الرأي من القائمة
-        localStorage.setItem('testimonials', JSON.stringify(savedTestimonials)); // تحديث localStorage
-        loadTestimonials(); // إعادة تحميل الآراء
-      }
+  }
+  function editTestimonial(index) {
+    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+    const testimonial = savedTestimonials[index];
+    document.getElementById('patient-name').value = testimonial.name;
+    document.getElementById('patient-comment').value = testimonial.comment;
+    currentEditingIndex = index;
+    toggleTestimonialForm();
+  }
+  function clearTestimonialForm() {
+    document.getElementById('patient-name').value = '';
+    document.getElementById('patient-comment').value = '';
+    document.getElementById('patient-image').value = '';
+    currentEditingIndex = null;
+  }
+  function toggleTestimonialForm() {
+    const form = document.getElementById('testimonialForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+  function toggleGovernorate() {
+    const country = document.getElementById('country').value;
+    document.getElementById('egypt-governorates').classList.add('hidden');
+    document.getElementById('saudi-regions').classList.add('hidden');
+    if (country === 'egypt') {
+      document.getElementById('egypt-governorates').classList.remove('hidden');
+      document.getElementById('governorate-egypt').selectedIndex = 0;
+    } else if (country === 'saudi') {
+      document.getElementById('saudi-regions').classList.remove('hidden');
+      document.getElementById('region-saudi').selectedIndex = 0;
     }
-
-    function editTestimonial(index) {
-      const savedTestimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
-      const testimonial = savedTestimonials[index];
-      document.getElementById('patient-name').value = testimonial.name;
-      document.getElementById('patient-comment').value = testimonial.comment;
-      currentEditingIndex = index;
-      toggleTestimonialForm();
+  }
+  function submitForm() {
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const country = document.getElementById('country').value;
+    const governorateEgypt = document.getElementById('governorate-egypt').value;
+    const regionSaudi = document.getElementById('region-saudi').value;
+    const consultationType = document.getElementById('consultation-type').value;
+    let whatsappNumber = "";
+    if (country === 'egypt') {
+      whatsappNumber = "201146141421";
+    } else if (country === 'saudi') {
+      whatsappNumber = "966560533284";
     }
-
-    function clearTestimonialForm() {
-      document.getElementById('patient-name').value = '';
-      document.getElementById('patient-comment').value = '';
-      document.getElementById('patient-image').value = '';
-      currentEditingIndex = null;
-    }
-
-    function toggleAdminLogin() {
-      const adminLogin = document.getElementById('admin-login');
-      adminLogin.classList.toggle('hidden');
-    }
-
-    function loginAsAdmin() {
-      const password = document.getElementById('admin-password').value;
-      const correctPassword = "Hisham@2025"; // كلمة المرور السرية للمسؤول
-      if (password === correctPassword) {
-        isAdminLoggedIn = true;
-        alert('Admin login successful!');
-        loadTestimonials(); // إعادة تحميل الآراء لإظهار أزرار التعديل والحذف
-      } else {
-        alert('Incorrect password. Please try again.');
-      }
-    }
-
-    function showPage(pageId) {
-      const pages = document.querySelectorAll('.container');
-      pages.forEach(page => page.classList.add('hidden'));
-      document.getElementById(pageId).classList.remove('hidden');
-    }
-
-    function toggleGovernorate() {
-      const country = document.getElementById('country').value;
-      const egyptDiv = document.getElementById('egypt-governorates');
-      const saudiDiv = document.getElementById('saudi-regions');
-      if (country === 'egypt') {
-        egyptDiv.classList.remove('hidden');
-        saudiDiv.classList.add('hidden');
-      } else if (country === 'saudi') {
-        saudiDiv.classList.remove('hidden');
-        egyptDiv.classList.add('hidden');
-      }
-    }
-
-    function submitForm() {
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const country = document.getElementById('country').value;
-      const governorateEgypt = document.getElementById('governorate-egypt').value;
-      const regionSaudi = document.getElementById('region-saudi').value;
-      const consultationType = document.getElementById('consultation-type').value;
-      let whatsappNumber = "";
-      if (country === 'egypt') {
-        whatsappNumber = "201146141421";
-      } else if (country === 'saudi') {
-        whatsappNumber = "966560533284";
-      }
-      let message = `Name: ${name}
+    let message = `Name: ${name}
 Phone: ${phone}
 Country: ${country}
 `;
-      if (country === 'egypt') {
-        message += `Governorate: ${governorateEgypt}
+    if (country === 'egypt') message += `Governorate: ${governorateEgypt}
 `;
-      } else if (country === 'saudi') {
-        message += `Region: ${regionSaudi}
+    if (country === 'saudi') message += `Region: ${regionSaudi}
 `;
-      }
-      message += `Consultation Type: ${consultationType === 'online' ? 'Online' : 'In Clinic'}
-`;
-      const encodedMessage = encodeURIComponent(message);
-      window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
-    }
-  </script>
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    message += `Consultation Type: ${consultationType === 'online' ? 'Online' : 'In Clinic'}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
+  }
+</script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
